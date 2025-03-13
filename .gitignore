@@ -1,0 +1,76 @@
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.pyc
+*.pyo
+*.pkl
+
+# Archivos de logs
+logs/
+*.log
+nohup.out
+
+# Dependencias de Python
+venv/
+env/
+.venv/
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+
+# Configuración de BentoML
+.bentoml/
+.bento/
+.bentoml.lock
+
+# Modelos descargados (Ollama y Hugging Face)
+models/
+ollama_models/
+hf_cache/
+
+# Archivos de datos y bases de datos temporales
+dataset/
+*.db
+*.sqlite
+*.sqlite3
+*.h5
+*.jsonl
+
+# Archivos sensibles o de configuración local
+.env
+*.secret
+*.key
+*.pem
+
+# Docker
+docker-compose.override.yml
+.Dockerfile.swp
+.Dockerfile~
+.bentofile.yaml
+
+# IDEs y editores de código
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+
+# Cachés y archivos temporales
+tmp/
+temp/
+cache/
+__pycache__/
+
+# Otros
+*.bak
+*.old
+*.orig
+*.rej
+*pdf
+*doc
+*svg
+*docx
+.DS_Store
