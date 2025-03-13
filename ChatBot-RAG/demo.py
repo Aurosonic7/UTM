@@ -8,7 +8,7 @@ LANGUAGE_MODEL = "hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF"
 
 # Cargar dataset
 VECTOR_DB = []
-with open("./cat-facts.txt", "r") as file:
+with open("./tech-facts.txt", "r") as file:
     dataset = file.readlines()
 
 # Función para agregar datos al vector DB
@@ -28,7 +28,7 @@ def cosine_similarity(a, b):
 
 # Función para recuperar información
 def retrieve(query, top_n=3):
-    query_embedding = ollama.embed(model=EMBEDDING_MODEL, input=query)["embeddings"][0]
+    query_embedding = ollama.embed(model=EMBEDDING_MODEL, input=query.lower())["embeddings"][0]
     similarities = [(chunk, cosine_similarity(query_embedding, embedding)) for chunk, embedding in VECTOR_DB]
     similarities.sort(key=lambda x: x[1], reverse=True)
     return similarities[:top_n]
@@ -41,8 +41,16 @@ class ChatbotService:
     async def ask(self, query: str) -> str:
         retrieved_knowledge = retrieve(query)
 
-        instruction_prompt = f"You are a helpful chatbot. Use only the following pieces of context:\n" + \
-                             "\n".join([f" - {chunk}" for chunk, _ in retrieved_knowledge])
+        print("Retrieved knowledge:")
+        for chunk, similarity in retrieved_knowledge:
+            print(f" - (similarity: {similarity:.2f}) {chunk}")
+
+        if not retrieved_knowledge:
+            return "I don't have information on that topic in my dataset."
+
+        instruction_prompt = f"You are a chatbot that ONLY uses the provided facts to answer questions.\n" + \
+            "\n".join([f" - {chunk}" for chunk, _ in retrieved_knowledge]) + \
+            "\nIf you don't find relevant information, respond with: 'I don't have information on that topic in my dataset.'"
 
         response = ollama.chat(
             model=LANGUAGE_MODEL,
