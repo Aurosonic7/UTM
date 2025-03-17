@@ -1,0 +1,49 @@
+version: "3.8"
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - chatbot_network
+
+  fastapi:
+    build: ./ApiFast
+    container_name: fastapi
+    ports:
+      - "8000:8000"
+    depends_on:
+      - elasticsearch
+      - ollama
+    environment:
+      - ES_HOST=elasticsearch
+      - ES_PORT=9200
+      - OLLAMA_HOST=ollama
+      - OLLAMA_PORT=11434
+    networks:
+      - chatbot_network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - chatbot_network
+
+volumes:
+  esdata:
+  ollama_data:
+
+networks:
+  chatbot_network:
+    driver: bridge
