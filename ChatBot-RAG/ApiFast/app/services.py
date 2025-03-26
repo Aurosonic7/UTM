@@ -1,7 +1,6 @@
 import numpy as np
 from typing import List, Tuple
-from app.utils import cosine_similarity
-from app.connections import es_client, ollama_client, save_chunk_to_elasticsearch
+from app.connections import es_client, ollama_client
 
 EMBEDDING_MODEL = 'hf.co/CompendiumLabs/bge-base-en-v1.5-gguf'
 LANGUAGE_MODEL = 'hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF'
@@ -37,7 +36,7 @@ def retrieve(query: str, top_n: int = 3) -> List[Tuple[str, float]]:
         results.append((chunk, score))
 
     # Filtrar por un umbral (por ej. 0.7)
-    filtered = [(chunk, score) for (chunk, score) in results if score >= 0.75]
+    filtered = [(chunk, score) for (chunk, score) in results if score >= 0.85]
 
     return filtered
 

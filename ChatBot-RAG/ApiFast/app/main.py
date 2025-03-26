@@ -1,11 +1,9 @@
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
-from app.models import Query, Response
+from app.models import Query
 from app.services import retrieve, generate_response, EMBEDDING_MODEL
 from app.connections import initialize_elasticsearch, save_dataset_to_elasticsearch, ollama_client
-import os
-from uuid import uuid4
 
 app = FastAPI()
 
