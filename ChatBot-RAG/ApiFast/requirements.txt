@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-ollama
-numpy
-pydantic
-elasticsearch
-transformers
-torch
