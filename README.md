@@ -80,11 +80,3 @@ typing-extensions==4.5.0
 📈 Diagrama general del ChatBot con RAG
 
 ![Diagrama general del sistema](Diagrama-ChatBot-RAG.png)
-
----
-
-## 🧠 Créditos y uso
-
-Este proyecto ha sido desarrollado por **Christian Vicente**.  
-Todos los derechos reservados. Su uso está autorizado únicamente con fines educativos, de estudio o demostración académica.  
-No está permitido su uso comercial ni su redistribución sin consentimiento explícito del autor.
